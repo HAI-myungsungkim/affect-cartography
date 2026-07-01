@@ -1,0 +1,1067 @@
+{
+  "version": "0.1.0-seed",
+  "language": "ko",
+  "note": "초기 시드 24개 (사분면별 6개). 운영 전 연구진이 60~80개로 확장 + 검수 필요.",
+  "reference": [
+    "장혜진·김영근 (2020). 한국어 대표 정서 단어",
+    "권소영·윤홍옥·이동훈 (2022). 한국어 정서 단어 450개 평정"
+  ],
+  "words": [
+    {
+      "word": "신난다",
+      "definition": "마음이 들떠 즐겁고 활기찬 느낌",
+      "example": "오랜만에 친구를 만나기로 해서 아침부터 신난다.",
+      "valence": 0.7,
+      "arousal": 0.7,
+      "neighbors": [
+        {
+          "word": "설렌다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": -0.1
+        },
+        {
+          "word": "벅차다",
+          "direction": "더 강하다면",
+          "delta_v": 0.1,
+          "delta_a": 0.2
+        },
+        {
+          "word": "기쁘다",
+          "direction": "더 차분한 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": -0.3
+        },
+        {
+          "word": "들뜬다",
+          "direction": "더 들뜬 쪽이라면",
+          "delta_v": -0.1,
+          "delta_a": 0.2
+        }
+      ]
+    },
+    {
+      "word": "설렌다",
+      "definition": "기대감으로 가슴이 살짝 두근거리는 느낌",
+      "example": "내일 면접 결과가 나온다고 생각하니 설렌다.",
+      "valence": 0.6,
+      "arousal": 0.5,
+      "neighbors": [
+        {
+          "word": "신난다",
+          "direction": "더 들뜬 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.2
+        },
+        {
+          "word": "기대된다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": -0.1
+        },
+        {
+          "word": "두근거린다",
+          "direction": "더 강하다면",
+          "delta_v": -0.1,
+          "delta_a": 0.2
+        },
+        {
+          "word": "편안하다",
+          "direction": "더 차분한 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.6
+        }
+      ]
+    },
+    {
+      "word": "벅차다",
+      "definition": "감정이 가슴 가득 차올라 표현하기 어려운 느낌",
+      "example": "졸업식에서 부모님을 보니 가슴이 벅찼다.",
+      "valence": 0.8,
+      "arousal": 0.6,
+      "neighbors": [
+        {
+          "word": "감격스럽다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        },
+        {
+          "word": "기쁘다",
+          "direction": "더 차분한 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.3
+        },
+        {
+          "word": "신난다",
+          "direction": "더 약하다면",
+          "delta_v": -0.1,
+          "delta_a": 0.1
+        },
+        {
+          "word": "뿌듯하다",
+          "direction": "더 잔잔한 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.4
+        }
+      ]
+    },
+    {
+      "word": "기대된다",
+      "definition": "앞으로의 일에 대한 긍정적 예상",
+      "example": "이번 주말 여행이 기대된다.",
+      "valence": 0.5,
+      "arousal": 0.4,
+      "neighbors": [
+        {
+          "word": "설렌다",
+          "direction": "더 강하다면",
+          "delta_v": 0.1,
+          "delta_a": 0.1
+        },
+        {
+          "word": "신난다",
+          "direction": "더 들뜬 쪽이라면",
+          "delta_v": 0.2,
+          "delta_a": 0.3
+        },
+        {
+          "word": "편안하다",
+          "direction": "더 차분한 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.6
+        },
+        {
+          "word": "두근거린다",
+          "direction": "더 긴장된 쪽이라면",
+          "delta_v": -0.2,
+          "delta_a": 0.3
+        }
+      ]
+    },
+    {
+      "word": "두근거린다",
+      "definition": "기대와 긴장이 섞여 가슴이 빠르게 뛰는 느낌",
+      "example": "발표 직전이라 두근거린다.",
+      "valence": 0.2,
+      "arousal": 0.7,
+      "neighbors": [
+        {
+          "word": "설렌다",
+          "direction": "더 약하다면",
+          "delta_v": 0.4,
+          "delta_a": -0.2
+        },
+        {
+          "word": "긴장된다",
+          "direction": "더 불안한 쪽이라면",
+          "delta_v": -0.5,
+          "delta_a": 0.0
+        },
+        {
+          "word": "신난다",
+          "direction": "더 즐거운 쪽이라면",
+          "delta_v": 0.5,
+          "delta_a": 0.0
+        },
+        {
+          "word": "초조하다",
+          "direction": "더 부정적이라면",
+          "delta_v": -0.6,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "감격스럽다",
+      "definition": "예상치 못한 감동으로 마음이 크게 움직이는 느낌",
+      "example": "오랜 노력 끝에 결과를 보니 감격스러웠다.",
+      "valence": 0.8,
+      "arousal": 0.5,
+      "neighbors": [
+        {
+          "word": "벅차다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.1
+        },
+        {
+          "word": "뿌듯하다",
+          "direction": "더 잔잔한 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.3
+        },
+        {
+          "word": "기쁘다",
+          "direction": "더 일상적이라면",
+          "delta_v": -0.1,
+          "delta_a": -0.2
+        },
+        {
+          "word": "고맙다",
+          "direction": "관계 중심으로 옮긴다면",
+          "delta_v": -0.1,
+          "delta_a": -0.2
+        }
+      ]
+    },
+    {
+      "word": "긴장된다",
+      "definition": "곧 닥칠 일에 대비해 몸과 마음이 굳어지는 느낌",
+      "example": "교수님과 미팅이 30분 남았는데 긴장된다.",
+      "valence": -0.3,
+      "arousal": 0.6,
+      "neighbors": [
+        {
+          "word": "초조하다",
+          "direction": "더 강하다면",
+          "delta_v": -0.2,
+          "delta_a": 0.1
+        },
+        {
+          "word": "두근거린다",
+          "direction": "기대 쪽으로 옮긴다면",
+          "delta_v": 0.5,
+          "delta_a": 0.1
+        },
+        {
+          "word": "불안하다",
+          "direction": "더 막연한 쪽이라면",
+          "delta_v": -0.2,
+          "delta_a": 0.0
+        },
+        {
+          "word": "조급하다",
+          "direction": "시간 압박이 강하다면",
+          "delta_v": -0.1,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "초조하다",
+      "definition": "결과를 기다리며 마음이 안절부절 못하는 느낌",
+      "example": "성적 발표를 기다리는 동안 초조했다.",
+      "valence": -0.5,
+      "arousal": 0.7,
+      "neighbors": [
+        {
+          "word": "긴장된다",
+          "direction": "더 약하다면",
+          "delta_v": 0.2,
+          "delta_a": -0.1
+        },
+        {
+          "word": "불안하다",
+          "direction": "더 막연한 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.1
+        },
+        {
+          "word": "조급하다",
+          "direction": "더 행동이 급해진다면",
+          "delta_v": 0.1,
+          "delta_a": 0.0
+        },
+        {
+          "word": "두렵다",
+          "direction": "결과가 더 무섭게 느껴진다면",
+          "delta_v": -0.2,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "불안하다",
+      "definition": "원인이 분명치 않은 채로 마음이 떠 있는 느낌",
+      "example": "이유 없이 가슴이 답답하고 불안하다.",
+      "valence": -0.5,
+      "arousal": 0.5,
+      "neighbors": [
+        {
+          "word": "초조하다",
+          "direction": "더 급박한 느낌이라면",
+          "delta_v": 0.0,
+          "delta_a": 0.2
+        },
+        {
+          "word": "두렵다",
+          "direction": "대상이 더 분명하다면",
+          "delta_v": -0.2,
+          "delta_a": 0.0
+        },
+        {
+          "word": "답답하다",
+          "direction": "더 가라앉은 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": -0.7
+        },
+        {
+          "word": "긴장된다",
+          "direction": "원인이 더 분명하다면",
+          "delta_v": 0.2,
+          "delta_a": 0.1
+        }
+      ]
+    },
+    {
+      "word": "짜증난다",
+      "definition": "사소한 불편이 쌓여 거슬리고 예민해진 느낌",
+      "example": "계속 일이 꼬여서 짜증난다.",
+      "valence": -0.5,
+      "arousal": 0.5,
+      "neighbors": [
+        {
+          "word": "화난다",
+          "direction": "더 강하다면",
+          "delta_v": -0.2,
+          "delta_a": 0.2
+        },
+        {
+          "word": "답답하다",
+          "direction": "더 가라앉은 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": -0.7
+        },
+        {
+          "word": "조급하다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        },
+        {
+          "word": "조급하다",
+          "direction": "시간 압박 쪽이라면",
+          "delta_v": -0.1,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "화난다",
+      "definition": "특정 대상이나 상황에 강하게 분노하는 느낌",
+      "example": "약속을 또 어겨서 정말 화난다.",
+      "valence": -0.7,
+      "arousal": 0.7,
+      "neighbors": [
+        {
+          "word": "짜증난다",
+          "direction": "더 약하다면",
+          "delta_v": 0.2,
+          "delta_a": -0.2
+        },
+        {
+          "word": "억울하다",
+          "direction": "내가 피해자라는 느낌이라면",
+          "delta_v": 0.1,
+          "delta_a": -0.2
+        },
+        {
+          "word": "억울하다",
+          "direction": "비슷하지만 더 마음에 남는 느낌이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.1
+        },
+        {
+          "word": "답답하다",
+          "direction": "더 가라앉은 쪽이라면",
+          "delta_v": 0.2,
+          "delta_a": -0.9
+        }
+      ]
+    },
+    {
+      "word": "조급하다",
+      "definition": "시간이 부족해 마음이 급해진 느낌",
+      "example": "마감 직전이라 자꾸 조급해진다.",
+      "valence": -0.4,
+      "arousal": 0.6,
+      "neighbors": [
+        {
+          "word": "초조하다",
+          "direction": "더 막연한 두려움이 든다면",
+          "delta_v": -0.1,
+          "delta_a": 0.1
+        },
+        {
+          "word": "긴장된다",
+          "direction": "더 정적인 압박이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.0
+        },
+        {
+          "word": "답답하다",
+          "direction": "진행이 안 된다는 느낌이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.8
+        },
+        {
+          "word": "짜증난다",
+          "direction": "주변이 거슬린다면",
+          "delta_v": -0.1,
+          "delta_a": -0.1
+        }
+      ]
+    },
+    {
+      "word": "답답하다",
+      "definition": "마음이 막힌 듯 무겁고 풀리지 않는 느낌",
+      "example": "이야기할 사람이 없을 때 가슴이 답답해진다.",
+      "valence": -0.4,
+      "arousal": -0.2,
+      "neighbors": [
+        {
+          "word": "막막하다",
+          "direction": "더 무겁다면",
+          "delta_v": -0.1,
+          "delta_a": -0.1
+        },
+        {
+          "word": "조급하다",
+          "direction": "더 들떠있다면",
+          "delta_v": 0.0,
+          "delta_a": 0.8
+        },
+        {
+          "word": "지친다",
+          "direction": "더 가라앉아있다면",
+          "delta_v": -0.1,
+          "delta_a": -0.3
+        },
+        {
+          "word": "막막하다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "막막하다",
+      "definition": "앞이 보이지 않아 어디서부터 시작해야 할지 모르는 느낌",
+      "example": "할 일이 너무 많아 막막하다.",
+      "valence": -0.5,
+      "arousal": -0.3,
+      "neighbors": [
+        {
+          "word": "답답하다",
+          "direction": "더 약하다면",
+          "delta_v": 0.1,
+          "delta_a": 0.1
+        },
+        {
+          "word": "무력하다",
+          "direction": "더 깊이 가라앉는다면",
+          "delta_v": -0.1,
+          "delta_a": -0.2
+        },
+        {
+          "word": "지친다",
+          "direction": "에너지가 더 없다면",
+          "delta_v": 0.0,
+          "delta_a": -0.2
+        },
+        {
+          "word": "외롭다",
+          "direction": "혼자라는 느낌이라면",
+          "delta_v": -0.1,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "지친다",
+      "definition": "쌓인 피로로 더는 힘이 나지 않는 느낌",
+      "example": "시험 기간 내내 잠을 못 자서 지쳤다.",
+      "valence": -0.5,
+      "arousal": -0.5,
+      "neighbors": [
+        {
+          "word": "무력하다",
+          "direction": "의욕까지 사라졌다면",
+          "delta_v": -0.1,
+          "delta_a": -0.1
+        },
+        {
+          "word": "답답하다",
+          "direction": "더 깨어있는 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.3
+        },
+        {
+          "word": "허무하다",
+          "direction": "의미까지 흐려졌다면",
+          "delta_v": -0.1,
+          "delta_a": -0.1
+        },
+        {
+          "word": "막막하다",
+          "direction": "앞이 안 보인다는 느낌이라면",
+          "delta_v": 0.0,
+          "delta_a": 0.2
+        }
+      ]
+    },
+    {
+      "word": "외롭다",
+      "definition": "누군가와 연결되어 있지 않다고 느끼는 마음",
+      "example": "다들 바빠 보여 혼자만 외로워졌다.",
+      "valence": -0.6,
+      "arousal": -0.3,
+      "neighbors": [
+        {
+          "word": "쓸쓸하다",
+          "direction": "비슷하지만 더 잔잔하다면",
+          "delta_v": 0.0,
+          "delta_a": -0.1
+        },
+        {
+          "word": "허무하다",
+          "direction": "의미까지 흐려졌다면",
+          "delta_v": -0.1,
+          "delta_a": -0.2
+        },
+        {
+          "word": "쓸쓸하다",
+          "direction": "특정 대상이 떠오른다면",
+          "delta_v": 0.2,
+          "delta_a": 0.0
+        },
+        {
+          "word": "답답하다",
+          "direction": "감정이 풀리지 않는다면",
+          "delta_v": 0.2,
+          "delta_a": 0.1
+        }
+      ]
+    },
+    {
+      "word": "슬프다",
+      "definition": "잃거나 상한 것에 대한 마음의 무거움",
+      "example": "오랜 친구와 작별 인사를 하고 나니 슬프다.",
+      "valence": -0.7,
+      "arousal": -0.3,
+      "neighbors": [
+        {
+          "word": "허무하다",
+          "direction": "의미까지 흐려졌다면",
+          "delta_v": 0.0,
+          "delta_a": -0.2
+        },
+        {
+          "word": "쓸쓸하다",
+          "direction": "더 잔잔한 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": -0.1
+        },
+        {
+          "word": "우울하다",
+          "direction": "더 오래 가라앉는 느낌이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.2
+        },
+        {
+          "word": "외롭다",
+          "direction": "혼자라는 느낌이 크다면",
+          "delta_v": 0.1,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "우울하다",
+      "definition": "오래도록 가라앉아 의욕이 나지 않는 느낌",
+      "example": "며칠째 별다른 이유 없이 우울하다.",
+      "valence": -0.7,
+      "arousal": -0.5,
+      "neighbors": [
+        {
+          "word": "무력하다",
+          "direction": "의지까지 사라졌다면",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        },
+        {
+          "word": "슬프다",
+          "direction": "특정 이유가 떠오른다면",
+          "delta_v": 0.0,
+          "delta_a": 0.2
+        },
+        {
+          "word": "지친다",
+          "direction": "주로 피로감이라면",
+          "delta_v": 0.2,
+          "delta_a": 0.0
+        },
+        {
+          "word": "허무하다",
+          "direction": "의미가 없게 느껴진다면",
+          "delta_v": 0.0,
+          "delta_a": 0.1
+        }
+      ]
+    },
+    {
+      "word": "편안하다",
+      "definition": "긴장이 풀려 마음이 가벼운 상태",
+      "example": "따뜻한 차를 마시며 책을 보니 편안하다.",
+      "valence": 0.5,
+      "arousal": -0.3,
+      "neighbors": [
+        {
+          "word": "차분하다",
+          "direction": "더 잔잔한 쪽이라면",
+          "delta_v": -0.1,
+          "delta_a": -0.1
+        },
+        {
+          "word": "행복하다",
+          "direction": "더 따뜻한 쪽이라면",
+          "delta_v": 0.2,
+          "delta_a": 0.1
+        },
+        {
+          "word": "여유롭다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        },
+        {
+          "word": "차분하다",
+          "direction": "더 가라앉아있다면",
+          "delta_v": 0.0,
+          "delta_a": -0.3
+        }
+      ]
+    },
+    {
+      "word": "차분하다",
+      "definition": "마음이 가라앉아 흔들림 없는 상태",
+      "example": "심호흡을 하니 다시 차분해졌다.",
+      "valence": 0.3,
+      "arousal": -0.4,
+      "neighbors": [
+        {
+          "word": "편안하다",
+          "direction": "더 따뜻한 쪽이라면",
+          "delta_v": 0.2,
+          "delta_a": 0.1
+        },
+        {
+          "word": "고요하다",
+          "direction": "더 깊은 정적이라면",
+          "delta_v": -0.1,
+          "delta_a": -0.2
+        },
+        {
+          "word": "여유롭다",
+          "direction": "시간 여유가 느껴진다면",
+          "delta_v": 0.2,
+          "delta_a": 0.1
+        },
+        {
+          "word": "지친다",
+          "direction": "더 가라앉아있다면",
+          "delta_v": -0.8,
+          "delta_a": -0.1
+        }
+      ]
+    },
+    {
+      "word": "뿌듯하다",
+      "definition": "노력의 결과에 만족스러운 느낌",
+      "example": "오늘 할 일을 다 끝내서 뿌듯하다.",
+      "valence": 0.7,
+      "arousal": -0.1,
+      "neighbors": [
+        {
+          "word": "행복하다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        },
+        {
+          "word": "감격스럽다",
+          "direction": "더 벅찬 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.6
+        },
+        {
+          "word": "편안하다",
+          "direction": "더 잔잔한 쪽이라면",
+          "delta_v": -0.2,
+          "delta_a": -0.2
+        },
+        {
+          "word": "고맙다",
+          "direction": "관계 중심으로 옮긴다면",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "행복하다",
+      "definition": "삶이 풍요롭게 느껴지는 따뜻한 만족감",
+      "example": "가족과 함께 저녁을 먹는 시간이 행복하다.",
+      "valence": 0.8,
+      "arousal": -0.1,
+      "neighbors": [
+        {
+          "word": "편안하다",
+          "direction": "더 잔잔한 쪽이라면",
+          "delta_v": -0.3,
+          "delta_a": -0.2
+        },
+        {
+          "word": "뿌듯하다",
+          "direction": "성취 기반이라면",
+          "delta_v": -0.1,
+          "delta_a": 0.0
+        },
+        {
+          "word": "벅차다",
+          "direction": "더 강하게 차오른다면",
+          "delta_v": 0.0,
+          "delta_a": 0.7
+        },
+        {
+          "word": "고맙다",
+          "direction": "관계 중심으로 옮긴다면",
+          "delta_v": -0.1,
+          "delta_a": -0.1
+        }
+      ]
+    },
+    {
+      "word": "여유롭다",
+      "definition": "시간과 마음에 공간이 있는 느낌",
+      "example": "오랜만에 여유로운 주말을 보냈다.",
+      "valence": 0.5,
+      "arousal": -0.4,
+      "neighbors": [
+        {
+          "word": "편안하다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.1
+        },
+        {
+          "word": "차분하다",
+          "direction": "더 조용한 쪽이라면",
+          "delta_v": -0.2,
+          "delta_a": 0.0
+        },
+        {
+          "word": "행복하다",
+          "direction": "더 따뜻한 쪽이라면",
+          "delta_v": 0.3,
+          "delta_a": 0.3
+        },
+        {
+          "word": "고요하다",
+          "direction": "더 깊은 정적이라면",
+          "delta_v": -0.1,
+          "delta_a": -0.2
+        }
+      ]
+    },
+    {
+      "word": "고요하다",
+      "definition": "내면이 깊고 잔잔한 정적의 상태",
+      "example": "새벽 산책에서 마음이 고요해졌다.",
+      "valence": 0.2,
+      "arousal": -0.6,
+      "neighbors": [
+        {
+          "word": "차분하다",
+          "direction": "더 일상적이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.2
+        },
+        {
+          "word": "여유롭다",
+          "direction": "더 따뜻한 쪽이라면",
+          "delta_v": 0.3,
+          "delta_a": 0.2
+        },
+        {
+          "word": "편안하다",
+          "direction": "더 가벼운 쪽이라면",
+          "delta_v": 0.3,
+          "delta_a": 0.3
+        },
+        {
+          "word": "허무하다",
+          "direction": "의미까지 사라졌다면",
+          "delta_v": -0.7,
+          "delta_a": 0.1
+        }
+      ]
+    },
+    {
+      "word": "기쁘다",
+      "definition": "마음에 즐거움이 차오르는 느낌",
+      "example": "원하던 결과를 들어 기쁘다.",
+      "valence": 0.7,
+      "arousal": 0.3,
+      "neighbors": [
+        {
+          "word": "행복하다",
+          "direction": "더 따뜻한 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": -0.4
+        },
+        {
+          "word": "신난다",
+          "direction": "더 들뜬 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": 0.4
+        },
+        {
+          "word": "뿌듯하다",
+          "direction": "성취 기반이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.4
+        },
+        {
+          "word": "감격스럽다",
+          "direction": "더 벅찬 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.2
+        }
+      ]
+    },
+    {
+      "word": "들뜬다",
+      "definition": "마음이 위쪽으로 가볍게 떠오르는 느낌",
+      "example": "새 학기 첫날이라 아침부터 들떴다.",
+      "valence": 0.6,
+      "arousal": 0.8,
+      "neighbors": [
+        {
+          "word": "신난다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.1,
+          "delta_a": -0.1
+        },
+        {
+          "word": "설렌다",
+          "direction": "더 차분한 쪽이라면",
+          "delta_v": 0.0,
+          "delta_a": -0.3
+        },
+        {
+          "word": "두근거린다",
+          "direction": "긴장이 섞이면",
+          "delta_v": -0.4,
+          "delta_a": -0.1
+        },
+        {
+          "word": "벅차다",
+          "direction": "더 강하다면",
+          "delta_v": 0.2,
+          "delta_a": -0.2
+        }
+      ]
+    },
+    {
+      "word": "고맙다",
+      "definition": "누군가의 마음이나 도움이 따뜻하게 다가오는 느낌",
+      "example": "어려울 때 도와준 사람이 떠올라 고맙다.",
+      "valence": 0.7,
+      "arousal": -0.2,
+      "neighbors": [
+        {
+          "word": "행복하다",
+          "direction": "더 풍요로운 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.1
+        },
+        {
+          "word": "뿌듯하다",
+          "direction": "성취 기반이라면",
+          "delta_v": 0.0,
+          "delta_a": 0.1
+        },
+        {
+          "word": "감격스럽다",
+          "direction": "더 벅찬 쪽이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.7
+        },
+        {
+          "word": "편안하다",
+          "direction": "더 잔잔한 쪽이라면",
+          "delta_v": -0.2,
+          "delta_a": -0.1
+        }
+      ]
+    },
+    {
+      "word": "두렵다",
+      "definition": "구체적인 대상에 대한 강한 회피 반응",
+      "example": "결과가 좋지 않을까봐 두렵다.",
+      "valence": -0.7,
+      "arousal": 0.6,
+      "neighbors": [
+        {
+          "word": "불안하다",
+          "direction": "대상이 더 막연해진다면",
+          "delta_v": 0.2,
+          "delta_a": -0.1
+        },
+        {
+          "word": "초조하다",
+          "direction": "기다리는 상황이라면",
+          "delta_v": 0.2,
+          "delta_a": 0.1
+        },
+        {
+          "word": "긴장된다",
+          "direction": "더 약하다면",
+          "delta_v": 0.4,
+          "delta_a": 0.0
+        },
+        {
+          "word": "화난다",
+          "direction": "분노로 전환된다면",
+          "delta_v": 0.0,
+          "delta_a": 0.1
+        }
+      ]
+    },
+    {
+      "word": "억울하다",
+      "definition": "정당하지 않은 일을 당했다는 답답한 분노",
+      "example": "내가 한 일이 아닌데 오해받아 억울하다.",
+      "valence": -0.6,
+      "arousal": 0.5,
+      "neighbors": [
+        {
+          "word": "화난다",
+          "direction": "더 분노가 강하다면",
+          "delta_v": -0.1,
+          "delta_a": 0.2
+        },
+        {
+          "word": "답답하다",
+          "direction": "더 가라앉은 쪽이라면",
+          "delta_v": 0.2,
+          "delta_a": -0.7
+        },
+        {
+          "word": "짜증난다",
+          "direction": "더 일상적 거슬림이라면",
+          "delta_v": 0.1,
+          "delta_a": 0.0
+        },
+        {
+          "word": "슬프다",
+          "direction": "더 깊이 가라앉는다면",
+          "delta_v": -0.1,
+          "delta_a": -0.8
+        }
+      ]
+    },
+    {
+      "word": "무력하다",
+      "definition": "할 수 있는 일이 없다고 느끼는 깊은 가라앉음",
+      "example": "아무리 해도 변하지 않는다는 생각에 무력해진다.",
+      "valence": -0.7,
+      "arousal": -0.5,
+      "neighbors": [
+        {
+          "word": "우울하다",
+          "direction": "비슷한 느낌의 다른 표현",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        },
+        {
+          "word": "지친다",
+          "direction": "주로 피로감이라면",
+          "delta_v": 0.2,
+          "delta_a": 0.0
+        },
+        {
+          "word": "허무하다",
+          "direction": "의미까지 흐려졌다면",
+          "delta_v": 0.0,
+          "delta_a": 0.0
+        },
+        {
+          "word": "막막하다",
+          "direction": "앞이 안 보인다는 느낌이라면",
+          "delta_v": -0.2,
+          "delta_a": 0.2
+        }
+      ]
+    },
+    {
+      "word": "허무하다",
+      "definition": "의미가 사라진 듯한 텅 빈 느낌",
+      "example": "오래 준비한 일이 끝나니 허무하다.",
+      "valence": -0.5,
+      "arousal": -0.6,
+      "neighbors": [
+        {
+          "word": "무력하다",
+          "direction": "의지까지 사라졌다면",
+          "delta_v": -0.2,
+          "delta_a": 0.1
+        },
+        {
+          "word": "우울하다",
+          "direction": "더 가라앉는다면",
+          "delta_v": -0.2,
+          "delta_a": 0.1
+        },
+        {
+          "word": "지친다",
+          "direction": "주로 피로감이라면",
+          "delta_v": 0.0,
+          "delta_a": 0.1
+        },
+        {
+          "word": "고요하다",
+          "direction": "오히려 평온해진다면",
+          "delta_v": 0.7,
+          "delta_a": 0.0
+        }
+      ]
+    },
+    {
+      "word": "쓸쓸하다",
+      "definition": "외로움이 잔잔히 스며드는 느낌",
+      "example": "혼자 저녁을 먹는데 문득 쓸쓸해졌다.",
+      "valence": -0.5,
+      "arousal": -0.4,
+      "neighbors": [
+        {
+          "word": "외롭다",
+          "direction": "더 강하다면",
+          "delta_v": -0.1,
+          "delta_a": 0.1
+        },
+        {
+          "word": "허무하다",
+          "direction": "의미까지 흐려졌다면",
+          "delta_v": 0.0,
+          "delta_a": -0.2
+        },
+        {
+          "word": "차분하다",
+          "direction": "오히려 평온해진다면",
+          "delta_v": 0.8,
+          "delta_a": 0.0
+        },
+        {
+          "word": "슬프다",
+          "direction": "더 가라앉는다면",
+          "delta_v": -0.2,
+          "delta_a": 0.1
+        }
+      ]
+    }
+  ]
+}

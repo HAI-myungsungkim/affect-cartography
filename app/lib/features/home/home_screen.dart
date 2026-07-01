@@ -1,0 +1,284 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+
+import '../../core/providers.dart';
+import '../../shared/theme/app_theme.dart';
+import '../notification/local_notification_service.dart';
+import '../notification/notification_repository.dart';
+
+/// 사양서 4.2 메인 홈.
+/// (3단계 정동 기록 화면이 완성되기 전에는 "지금 기록하기" 버튼이 스텁으로 동작)
+class HomeScreen extends ConsumerStatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends ConsumerState<HomeScreen> {
+  String? _realName;
+  // TODO(3단계): 실제 오늘의 응답 상태를 백엔드에서 가져온다.
+  final int _todayResponseCount = 0;
+  final int _todayTargetCount = 3;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUser();
+    _registerTodayNotifications();
+  }
+
+  /// 앱 진입 시 오늘의 알림 일정을 OS 큐에 등록 (세션당 1회).
+  Future<void> _registerTodayNotifications() async {
+    try {
+      await LocalNotificationService.requestPermissions();
+      final schedule = await ref
+          .read(notificationRepositoryProvider)
+          .getTodaySchedule();
+      await LocalNotificationService.scheduleToday(schedule);
+    } catch (e) {
+      // 알림 등록 실패 silent (네트워크 없는 상황 등)
+    }
+  }
+
+  Future<void> _loadUser() async {
+    final name = await ref.read(secureStorageProvider).getRealName();
+    if (mounted) setState(() => _realName = name);
+  }
+
+  String _today() {
+    final n = DateTime.now();
+    return '${n.year}년 ${n.month}월 ${n.day}일';
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          'Affect Cartography',
+          style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
+        ),
+      ),
+      drawer: const _AppDrawer(),
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                '안녕하세요, ${_realName ?? ""} 님',
+                style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              const SizedBox(height: 6),
+              Text(
+                _today(),
+                style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
+              ),
+              const SizedBox(height: 32),
+              _StatusCard(
+                completed: _todayResponseCount,
+                target: _todayTargetCount,
+              ),
+              const SizedBox(height: 32),
+              ElevatedButton(
+                onPressed: () => context.go('/record'),
+                child: const Text('지금 기록하기'),
+              ),
+              const SizedBox(height: 12),
+              OutlinedButton(
+                onPressed: () => context.go('/dashboard'),
+                style: OutlinedButton.styleFrom(
+                  minimumSize: const Size.fromHeight(56),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                child: const Text('대시보드 보기'),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _StatusCard extends StatelessWidget {
+  final int completed;
+  final int target;
+  const _StatusCard({required this.completed, required this.target});
+
+  @override
+  Widget build(BuildContext context) {
+    final ratio = target == 0 ? 0.0 : completed / target;
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: AppColors.accentBeige.withOpacity(0.4),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            '오늘의 기록',
+            style: TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 13,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 10),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '$completed',
+                style: const TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.w700,
+                  color: AppColors.primary,
+                ),
+              ),
+              Text(
+                ' / $target 회 완료',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: AppColors.textSecondary,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 12),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: ratio,
+              minHeight: 6,
+              backgroundColor: Colors.white,
+              valueColor: const AlwaysStoppedAnimation(AppColors.accentSage),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _AppDrawer extends ConsumerWidget {
+  const _AppDrawer();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Drawer(
+      child: SafeArea(
+        child: ListView(
+          children: [
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+              child: Text(
+                '메뉴',
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppColors.textSecondary,
+                    ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.notifications_outlined),
+              title: const Text('알림 시간대'),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/notification-settings');
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.help_outline),
+              title: const Text('도움말'),
+              onTap: () => Navigator.pop(context),
+            ),
+            ListTile(
+              leading: const Icon(Icons.contact_phone),
+              title: const Text('연구진 연락처'),
+              onTap: () => Navigator.pop(context),
+            ),
+            const Divider(),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+              child: Text(
+                '위기 자원',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.error,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+            const _CrisisResourceTile(
+              name: '자살예방상담전화',
+              phone: '1393',
+              hours: '24시간',
+            ),
+            const _CrisisResourceTile(
+              name: 'KAIST 학생상담센터',
+              phone: '042-350-2181',
+              hours: '평일 09:00–18:00',
+            ),
+            const _CrisisResourceTile(
+              name: '정신건강복지센터',
+              phone: '1577-0199',
+              hours: '24시간',
+            ),
+            const Divider(),
+            ListTile(
+              leading: const Icon(Icons.logout, color: AppColors.error),
+              title: const Text(
+                '로그아웃',
+                style: TextStyle(color: AppColors.error),
+              ),
+              onTap: () async {
+                await ref.read(secureStorageProvider).clearAuth();
+                if (context.mounted) context.go('/login');
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _CrisisResourceTile extends StatelessWidget {
+  final String name;
+  final String phone;
+  final String hours;
+  const _CrisisResourceTile({
+    required this.name,
+    required this.phone,
+    required this.hours,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      dense: true,
+      title: Text(name, style: const TextStyle(fontSize: 14)),
+      subtitle: Text(
+        '$phone · $hours',
+        style: TextStyle(fontSize: 12, color: AppColors.textSecondary),
+      ),
+      trailing: const Icon(Icons.phone, size: 18, color: AppColors.primary),
+      onTap: () {
+        // 실제로는 url_launcher로 tel: 링크 호출. 의존성 추가는 후속 단계에서.
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('$name: $phone')),
+        );
+      },
+    );
+  }
+}

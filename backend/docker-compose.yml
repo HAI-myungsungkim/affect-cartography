@@ -1,0 +1,48 @@
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: affect_postgres
+    environment:
+      POSTGRES_USER: affect_user
+      POSTGRES_PASSWORD: affect_pass
+      POSTGRES_DB: affect_cartography
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U affect_user -d affect_cartography"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: affect_redis
+    ports:
+      - "6379:6379"
+
+  app:
+    build: .
+    container_name: affect_app
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql+asyncpg://affect_user:affect_pass@postgres:5432/affect_cartography
+      DATABASE_URL_SYNC: postgresql://affect_user:affect_pass@postgres:5432/affect_cartography
+      REDIS_URL: redis://redis:6379/0
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+    volumes:
+      - ./:/app
+
+volumes:
+  postgres_data:
