@@ -9,6 +9,23 @@ class AffectRepository {
   final ApiClient _api;
   AffectRepository(this._api);
 
+  /// 현재 시각을 하루 3슬롯으로 분류.
+  /// 자정~11:59 → morning / 12:00~17:59 → afternoon / 18:00~ → evening
+  static String currentSlot([DateTime? now]) {
+    final h = (now ?? DateTime.now()).hour;
+    if (h < 12) return 'morning';
+    if (h < 18) return 'afternoon';
+    return 'evening';
+  }
+
+  /// 오늘 날짜를 YYYY-MM-DD 문자열로 (백엔드 Date 필드용).
+  static String today([DateTime? now]) {
+    final d = now ?? DateTime.now();
+    final m = d.month.toString().padLeft(2, '0');
+    final day = d.day.toString().padLeft(2, '0');
+    return '${d.year}-$m-$day';
+  }
+
   /// 점 모드 또는 궤도 모드 통합 저장.
   /// 백엔드: POST /affect/record
   Future<String> saveRecord({
@@ -20,11 +37,14 @@ class AffectRepository {
     int? responseLatencyMs,
     String? promptId,
   }) async {
-    // promptId가 빈 문자열이면 null로 처리 (알림 외 진입)
+    final now = DateTime.now();
+    // promptId가 빈 문자열이면 null로 처리 (알림 탭 진입)
     final body = <String, dynamic>{
       'mode': mode.apiValue,
       'valence': endPoint.valence,
       'arousal': endPoint.arousal,
+      'record_date': today(now),
+      'slot': currentSlot(now),
       'duration_window_minutes': durationWindowMinutes,
       'is_practice': isPractice,
       if (responseLatencyMs != null) 'response_latency_ms': responseLatencyMs,

@@ -6,6 +6,7 @@ import '../features/affect/affect_record_screen.dart';
 import '../features/agent/agent_dialogue_screen.dart';
 import '../features/auth/login_screen.dart';
 import '../features/dashboard/dashboard_screen.dart';
+import '../features/dev/dev_settings_screen.dart';
 import '../features/emotion/emotion_select_screen.dart';
 import '../features/home/home_screen.dart';
 import '../features/intervention/done_screen.dart';
@@ -82,6 +83,10 @@ GoRouter buildRouter(SecureStorage storage) {
       GoRoute(
         path: '/notification-settings',
         builder: (_, __) => const NotificationSettingsScreen(),
+      ),
+      GoRoute(
+        path: '/dev-settings',
+        builder: (_, __) => const DevSettingsScreen(),
       ),
     ],
   );

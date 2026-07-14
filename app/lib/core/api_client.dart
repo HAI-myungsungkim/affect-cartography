@@ -57,6 +57,14 @@ class ApiClient {
     });
   }
 
+  // --- 개발/테스트용 실험 조건 ---
+  Future<Response<dynamic>> getMyConditions() =>
+      dio.get('/auth/me/conditions');
+
+  /// 보낸 필드만 갱신. null은 보내지 않음.
+  Future<Response<dynamic>> updateMyConditions(Map<String, dynamic> changes) =>
+      dio.patch('/auth/me/conditions', data: changes);
+
   Future<Response<dynamic>> health() => dio.get('/health');
 
   Future<Response<dynamic>> crisisResources() => dio.get('/crisis-resources');

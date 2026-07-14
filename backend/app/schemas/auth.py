@@ -30,6 +30,32 @@ class LoginResponse(BaseModel):
     first_login: bool = False
 
 
+class UpdateConditionsRequest(BaseModel):
+    """개발/테스트용 실험 조건 변경 요청.
+
+    테스트 계정이 자기 실험 축을 직접 바꿔 각 흐름을 반복 확인할 때 사용.
+    모든 필드는 선택 — 보낸 값만 갱신한다.
+
+    ⚠️ 배포 전 복귀 지점: 실제 실험에서는 조건을 관리자만 배정해야 하므로,
+    이 엔드포인트는 숨기거나 관리자 전용으로 전환한다.
+    """
+    record_mode: str | None = Field(None, description="point / trajectory")
+    observation_mode: str | None = Field(None, description="self_only / recall_other / scenario_other")
+    emotion_timing: str | None = Field(None, description="immediate / delayed")
+    agent_mode: str | None = Field(None, description="none / enabled")
+    education_enabled: bool | None = Field(None)
+
+
+class ConditionsResponse(BaseModel):
+    """현재 사용자의 실험 조건 상태."""
+    participant_code: str
+    record_mode: str
+    observation_mode: str
+    emotion_timing: str
+    agent_mode: str
+    education_enabled: bool
+
+
 class LoginErrorCode:
     """로그인 실패 상세 코드. 사양서 4.1."""
     CODE_NOT_REGISTERED = "code_not_registered"  # 등록되지 않은 코드

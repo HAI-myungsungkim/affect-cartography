@@ -18,7 +18,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   String? _realName;
-  // TODO(3단계): 실제 오늘의 응답 상태를 백엔드에서 가져온다.
+  // TODO(3단계): 실제 오늘의 응답 상태를 백엔드에서 가져온다
   final int _todayResponseCount = 0;
   final int _todayTargetCount = 3;
 
@@ -29,7 +29,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     _registerTodayNotifications();
   }
 
-  /// 앱 진입 시 오늘의 알림 일정을 OS 큐에 등록 (세션당 1회).
+  /// 홈 진입 시 오늘의 알림 일정을 OS 에 등록 (세션당 1회).
   Future<void> _registerTodayNotifications() async {
     try {
       await LocalNotificationService.requestPermissions();
@@ -199,13 +199,36 @@ class _AppDrawer extends ConsumerWidget {
             ),
             ListTile(
               leading: const Icon(Icons.help_outline),
-              title: const Text('도움말'),
+              title: const Text('안내말'),
               onTap: () => Navigator.pop(context),
             ),
             ListTile(
               leading: const Icon(Icons.contact_phone),
               title: const Text('연구진 연락처'),
               onTap: () => Navigator.pop(context),
+            ),
+            const Divider(),
+            // ⚠️ 개발/테스트 전용. 실제 실험 배포 시 이 항목을 숨긴다.
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 8, 20, 8),
+              child: Text(
+                '개발 도구',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  color: AppColors.textSecondary,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+            ListTile(
+              leading: const Icon(Icons.tune),
+              title: const Text('개발자 설정 · 실험 조건'),
+              subtitle: const Text('축을 바꿔 각 흐름 테스트',
+                  style: TextStyle(fontSize: 12)),
+              onTap: () {
+                Navigator.pop(context);
+                context.push('/dev-settings');
+              },
             ),
             const Divider(),
             Padding(
@@ -227,7 +250,7 @@ class _AppDrawer extends ConsumerWidget {
             const _CrisisResourceTile(
               name: 'KAIST 학생상담센터',
               phone: '042-350-2181',
-              hours: '평일 09:00–18:00',
+              hours: '평일 09:00~18:00',
             ),
             const _CrisisResourceTile(
               name: '정신건강복지센터',

@@ -7,7 +7,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.api.deps import get_current_user
 from app.core.database import get_db
-from app.models.affect import AffectRecord, Quadrant, RecordModeAffect
+from app.models.affect import AffectRecord, Quadrant, RecordModeAffect, RecordSlot
 from app.models.user import User, RecordMode
 from app.schemas.affect import (
     AffectRecordCreate,
@@ -29,7 +29,7 @@ async def create_affect_record(
     db: AsyncSession = Depends(get_db),
 ):
     """정동 기록 생성. 점 모드 / 궤도 모드 통합 처리.
-    
+
     - 점 모드: valence, arousal 단일 좌표 저장
     - 궤도 모드: trajectory_points 시퀀스 + 끝점을 valence/arousal로 저장
     - 연습 세션(is_practice=true)도 동일하게 저장하되 분석 시 제외 가능
@@ -38,6 +38,8 @@ async def create_affect_record(
 
     record = AffectRecord(
         user_id=current_user.user_id,
+        record_date=payload.record_date,
+        slot=RecordSlot(payload.slot),
         valence=payload.valence,
         arousal=payload.arousal,
         quadrant=Quadrant(quadrant_str),
@@ -60,6 +62,8 @@ async def create_affect_record(
         record_id=str(record.record_id),
         user_id=str(record.user_id),
         timestamp=record.timestamp,
+        record_date=record.record_date,
+        slot=record.slot.value,
         valence=record.valence,
         arousal=record.arousal,
         quadrant=record.quadrant.value,
@@ -76,7 +80,7 @@ async def list_my_records(
     limit: int = Query(default=50, le=200),
     include_practice: bool = Query(default=False),
 ):
-    """내 정동 기록 목록 — 최신순. 대시보드(8단계) 미리보기."""
+    """내 정동 기록 목록 (최신순). 대시보드(8단계) 미리보기."""
     stmt = select(AffectRecord).where(AffectRecord.user_id == current_user.user_id)
     if not include_practice:
         stmt = stmt.where(AffectRecord.is_practice.is_(False))
@@ -88,6 +92,8 @@ async def list_my_records(
             record_id=str(r.record_id),
             user_id=str(r.user_id),
             timestamp=r.timestamp,
+            record_date=r.record_date,
+            slot=r.slot.value,
             valence=r.valence,
             arousal=r.arousal,
             quadrant=r.quadrant.value,
@@ -106,7 +112,7 @@ async def update_record_mode(
     db: AsyncSession = Depends(get_db),
 ):
     """사용자 기본 기록 모드 전환. 사양서 4.3.6.
-    
+
     이전 기록은 원래 모드 그대로 보존됨.
     """
     if mode not in ("point", "trajectory"):

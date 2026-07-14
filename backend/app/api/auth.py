@@ -1,19 +1,24 @@
-"""인증 라우터 — 사용자/관리자 로그인. 사양서 4.1."""
+"""인증 라우터 — 사용자/관리자 로그인, 개발용 조건 변경. 사양서 4.1."""
 from datetime import datetime, timezone
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api.deps import get_current_user
 from app.core.config import settings
 from app.core.database import get_db
 from app.core.security import create_access_token, hash_device_id
-from app.models.user import User, UserStatus
+from app.models.user import (
+    User, UserStatus, RecordMode, ObservationMode, EmotionTiming, AgentMode,
+)
 from app.schemas.auth import (
     AdminLoginRequest,
+    ConditionsResponse,
     LoginErrorCode,
     LoginRequest,
     LoginResponse,
+    UpdateConditionsRequest,
 )
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -92,6 +97,59 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
         education_enabled=user.education_enabled,
         trajectory_practice_done=user.trajectory_practice_done,
         first_login=first_login,
+    )
+
+
+@router.get("/me/conditions", response_model=ConditionsResponse)
+async def get_my_conditions(user: User = Depends(get_current_user)):
+    """현재 로그인한 사용자의 실험 조건 조회. (개발/테스트용)"""
+    return ConditionsResponse(
+        participant_code=user.participant_code,
+        record_mode=user.record_mode.value,
+        observation_mode=user.observation_mode.value,
+        emotion_timing=user.emotion_timing.value,
+        agent_mode=user.agent_mode.value,
+        education_enabled=user.education_enabled,
+    )
+
+
+@router.patch("/me/conditions", response_model=ConditionsResponse)
+async def update_my_conditions(
+    req: UpdateConditionsRequest,
+    user: User = Depends(get_current_user),
+    db: AsyncSession = Depends(get_db),
+):
+    """현재 로그인한 사용자의 실험 조건 변경. (개발/테스트용)
+
+    테스트 계정이 각 축을 직접 바꿔 흐름을 반복 확인하기 위한 것.
+    잘못된 enum 값은 400으로 반려한다.
+
+    ⚠️ 배포 전 복귀 지점: 실제 실험에서는 이 엔드포인트를 숨기거나
+    관리자 전용으로 전환한다.
+    """
+    try:
+        if req.record_mode is not None:
+            user.record_mode = RecordMode(req.record_mode)
+        if req.observation_mode is not None:
+            user.observation_mode = ObservationMode(req.observation_mode)
+        if req.emotion_timing is not None:
+            user.emotion_timing = EmotionTiming(req.emotion_timing)
+        if req.agent_mode is not None:
+            user.agent_mode = AgentMode(req.agent_mode)
+        if req.education_enabled is not None:
+            user.education_enabled = req.education_enabled
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=f"잘못된 조건 값: {e}")
+
+    await db.flush()
+
+    return ConditionsResponse(
+        participant_code=user.participant_code,
+        record_mode=user.record_mode.value,
+        observation_mode=user.observation_mode.value,
+        emotion_timing=user.emotion_timing.value,
+        agent_mode=user.agent_mode.value,
+        education_enabled=user.education_enabled,
     )
 
 

@@ -23,7 +23,7 @@ class LoginController extends StateNotifier<LoginState> {
         realName: realName.trim(),
       );
 
-      // 백엔드는 4xx도 응답 본문을 돌려주도록 validateStatus 설정됨.
+      // 백엔드는 4xx도 응답 본문을 내려주도록 validateStatus 설정됨
       if (resp.statusCode == 200) {
         final data = resp.data as Map<String, dynamic>;
         await _storage.saveLogin(
@@ -34,6 +34,11 @@ class LoginController extends StateNotifier<LoginState> {
           recordMode: data['record_mode'] as String,
           trajectoryPracticeDone:
               data['trajectory_practice_done'] as bool? ?? false,
+          // 실험 조건 축 (기본값은 각 축의 '없음/대조군' 값)
+          observationMode: data['observation_mode'] as String? ?? 'self_only',
+          emotionTiming: data['emotion_timing'] as String? ?? 'immediate',
+          agentMode: data['agent_mode'] as String? ?? 'none',
+          educationEnabled: data['education_enabled'] as bool? ?? false,
         );
         state = LoginSuccess(
           firstLogin: data['first_login'] as bool? ?? false,

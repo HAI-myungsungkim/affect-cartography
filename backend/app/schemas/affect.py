@@ -1,12 +1,12 @@
 """정동 기록 관련 Pydantic 스키마."""
-from datetime import datetime
+from datetime import datetime, date
 from typing import Literal
 
-from pydantic import BaseModel, Field, field_validator, model_validator
+from pydantic import BaseModel, Field, model_validator
 
 
 class TrajectoryPoint(BaseModel):
-    """궤도 모드의 좌표 시퀀스 한 점. 사양서 4.3.2."""
+    """궤도 모드의 좌표 시퀀스 원소. 사양서 4.3.2."""
     v: float = Field(..., ge=-1.0, le=1.0, description="valence")
     a: float = Field(..., ge=-1.0, le=1.0, description="arousal")
     t: int = Field(..., ge=0, description="시작점 기준 ms 오프셋")
@@ -17,6 +17,9 @@ class AffectRecordCreate(BaseModel):
     mode: Literal["point", "trajectory"] = "point"
     valence: float = Field(..., ge=-1.0, le=1.0)
     arousal: float = Field(..., ge=-1.0, le=1.0)
+    # 하루 3슬롯 (알림 시간대 대응). 앱이 현재 시각 기준으로 계산해 전송.
+    record_date: date
+    slot: Literal["morning", "afternoon", "evening"]
     # 궤도 모드 전용
     trajectory_points: list[TrajectoryPoint] | None = None
     duration_window_minutes: int = Field(default=180, ge=1, le=1440)
@@ -32,7 +35,7 @@ class AffectRecordCreate(BaseModel):
                 raise ValueError(
                     "궤도 모드는 trajectory_points에 최소 2개 좌표가 필요합니다"
                 )
-            # 끝점이 valence/arousal과 일치하는지 확인 (사양서: 끝점=현재 정동)
+            # 끝점이 valence/arousal과 일치하는지 확인 (사양: 끝점=현재 정동)
             last = self.trajectory_points[-1]
             if abs(last.v - self.valence) > 1e-6 or abs(last.a - self.arousal) > 1e-6:
                 raise ValueError(
@@ -48,6 +51,8 @@ class AffectRecordResponse(BaseModel):
     record_id: str
     user_id: str
     timestamp: datetime
+    record_date: date
+    slot: str
     valence: float
     arousal: float
     quadrant: str
@@ -60,8 +65,8 @@ class AffectRecordResponse(BaseModel):
 
 
 def compute_quadrant(valence: float, arousal: float) -> str:
-    """V-A 좌표를 4사분면으로 분류. 사양서 affect.py Quadrant 정의 참고.
-    
+    """V-A 좌표를 4사분면으로 분류. affect.py Quadrant 정의 참고.
+
     경계(=0)는 양의 사분면에 포함.
     """
     if valence >= 0 and arousal >= 0:
