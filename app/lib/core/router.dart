@@ -13,6 +13,7 @@ import '../features/intervention/done_screen.dart';
 import '../features/intervention/intervention_screen.dart';
 import '../features/notification/local_notification_service.dart';
 import '../features/notification/notification_settings_screen.dart';
+import '../features/observation/observation_screen.dart';
 import 'secure_storage.dart';
 
 /// 라우터. 토큰 보유 여부에 따라 /login ↔ /home redirect.
@@ -36,6 +37,14 @@ GoRouter buildRouter(SecureStorage storage) {
       GoRoute(
         path: '/home',
         builder: (_, __) => const HomeScreen(),
+      ),
+      GoRoute(
+        path: '/observation',
+        builder: (_, state) {
+          // mode: recall_other / scenario_other
+          final mode = state.uri.queryParameters['mode'] ?? 'recall_other';
+          return ObservationScreen(mode: mode);
+        },
       ),
       GoRoute(
         path: '/record',

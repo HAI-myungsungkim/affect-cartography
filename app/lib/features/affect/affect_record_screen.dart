@@ -11,7 +11,11 @@ import 'va_grid_widget.dart';
 
 /// 사양서 4.3 정동 기록 화면.
 /// 사용자 설정 모드(point/trajectory)에 따라 인터랙션 분기.
-/// 궤도 모드 + 연습 미완료 시 자동으로 연습 세션 진입(4.3.3).
+/// 궤도 모드 + 연습 미완료면 자동으로 연습 세션 진입(4.3.3).
+///
+/// 저장 후 실험 축4(agent_mode)에 따라 분기:
+///   - enabled → agent 대화(/dialogue)
+///   - none    → 감정 기록(/emotion)으로 바로
 class AffectRecordScreen extends ConsumerStatefulWidget {
   /// 알림 탭으로 진입한 경우 전달되는 prompt_id (응답률 계산용).
   final String? promptId;
@@ -83,10 +87,26 @@ class _AffectRecordScreenState extends ConsumerState<AffectRecordScreen> {
             promptId: widget.promptId,
           );
       if (!mounted) return;
-      // 저장 완료 → 에이전트 대화 화면으로 자동 다음 단계 진행 (좌표 전달)
-      context.go(
-        '/dialogue/$recordId?v=${_endPoint.valence}&a=${_endPoint.arousal}',
-      );
+
+      // 실험 축4(agent_mode)에 따라 다음 화면 분기 (서버에서 최신값 조회)
+      String agentMode = 'none';
+      try {
+        final resp = await ref.read(apiClientProvider).getMyConditions();
+        if (resp.statusCode == 200) {
+          agentMode = (resp.data['agent_mode'] as String?) ?? 'none';
+        }
+      } catch (_) {
+        agentMode = await ref.read(secureStorageProvider).getAgentMode();
+      }
+      final v = _endPoint.valence;
+      final a = _endPoint.arousal;
+      if (!mounted) return;
+      if (agentMode == 'enabled') {
+        context.go('/dialogue/$recordId?v=$v&a=$a');
+      } else {
+        // agent 없음 → 감정 기록으로 바로
+        context.go('/emotion/$recordId?v=$v&a=$a');
+      }
     } catch (e) {
       if (!mounted) return;
       setState(() => _saving = false);
@@ -124,7 +144,7 @@ class _AffectRecordScreenState extends ConsumerState<AffectRecordScreen> {
   @override
   Widget build(BuildContext context) {
     final guide = _mode == AffectMode.point
-        ? '지금 이 순간의 느낌을 가장 잘 나타내는\n위치에 점을 찍어보세요'
+        ? '지금 이 시간의 나를 가장 잘 나타내는\n위치의 점을 찍어보세요'
         : '지난 3시간 동안 마음의 흐름을\n그려보세요';
 
     return Scaffold(

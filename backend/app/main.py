@@ -4,7 +4,10 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import admin, affect, agent, auth, dashboard, emotion, health, intervention, notification
+from app.api import (
+    admin, affect, agent, auth, dashboard, emotion, health,
+    intervention, notification, observation,
+)
 from app.core.config import settings
 
 
@@ -39,6 +42,7 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(auth.router)
 app.include_router(affect.router)
+app.include_router(observation.router)
 app.include_router(emotion.router)
 app.include_router(agent.router)
 app.include_router(intervention.router)

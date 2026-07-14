@@ -52,6 +52,36 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return '${n.year}년 ${n.month}월 ${n.day}일';
   }
 
+  /// 실험 축1(관찰 대상)에 따라 시작점 분기.
+  /// self_only → 바로 정동 기록 / recall·scenario → 관찰 화면 먼저.
+  /// 항상 최신값을 쓰도록 서버에서 조건을 조회한다(로컬 캐시 동기화 문제 방지).
+  Future<void> _startRecording() async {
+    String obsMode = 'self_only';
+    try {
+      final resp = await ref.read(apiClientProvider).getMyConditions();
+      if (resp.statusCode == 200) {
+        obsMode = (resp.data['observation_mode'] as String?) ?? 'self_only';
+        // 로컬 캐시도 갱신 (다른 화면이 참조)
+        await ref.read(secureStorageProvider).saveConditions(
+              recordMode: resp.data['record_mode'] as String,
+              observationMode: resp.data['observation_mode'] as String,
+              emotionTiming: resp.data['emotion_timing'] as String,
+              agentMode: resp.data['agent_mode'] as String,
+              educationEnabled: resp.data['education_enabled'] as bool,
+            );
+      }
+    } catch (_) {
+      // 실패 시 로컬 캐시 폴백
+      obsMode = await ref.read(secureStorageProvider).getObservationMode();
+    }
+    if (!mounted) return;
+    if (obsMode == 'recall_other' || obsMode == 'scenario_other') {
+      context.go('/observation?mode=$obsMode');
+    } else {
+      context.go('/record');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +116,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               ),
               const SizedBox(height: 32),
               ElevatedButton(
-                onPressed: () => context.go('/record'),
+                onPressed: _startRecording,
                 child: const Text('지금 기록하기'),
               ),
               const SizedBox(height: 12),

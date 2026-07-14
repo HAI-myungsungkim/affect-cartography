@@ -8,6 +8,7 @@ class EmotionRepository {
   final ApiClient _api;
   EmotionRepository(this._api);
 
+  // --- 사전 방식 (레거시) ---
   Future<List<EmotionWord>> getCandidates({
     required double valence,
     required double arousal,
@@ -28,6 +29,26 @@ class EmotionRepository {
     return NeighborWords.fromJson(r.data as Map<String, dynamic>);
   }
 
+  // --- 서술형 (현재 기본) ---
+  /// 자유 서술(단어/문장) + 강도로 감정 기록.
+  Future<EmotionSelectResult> saveFreeText({
+    required String recordId,
+    required String freeText,
+    required int intensity,
+  }) async {
+    final r = await _api.dio.post('/emotion/select', data: {
+      'record_id': recordId,
+      'free_text': freeText,
+      'intensity': intensity,
+      'exploration_path': <String>[],
+    });
+    if (r.statusCode != 201) {
+      throw Exception('감정 기록 저장 실패: ${r.statusCode} ${r.data}');
+    }
+    return EmotionSelectResult.fromJson(r.data as Map<String, dynamic>);
+  }
+
+  // 사전 방식 저장 (레거시)
   Future<EmotionSelectResult> select({
     required String recordId,
     required String selectedWord,
