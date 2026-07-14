@@ -6,7 +6,7 @@ import 'affect_models.dart';
 /// V-A grid 위젯. 사양서 4.3.
 ///
 /// - 정사각형 격자
-/// - 가로축: 불쾌–유쾌, 세로축: 차분–활기
+/// - 가로축: 불쾌–유쾌, 세로축: 저각성–고각성
 /// - 양 끝점에만 라벨, 내부에는 옅은 격자선만
 /// - 점 모드(onPointSelected)와 궤도 모드(onTrajectoryComplete) 모두 지원
 ///
@@ -214,8 +214,8 @@ class _VAGridPainter extends CustomPainter {
 
     // 양 끝점 라벨
     final textColor = isDark ? AppColors.textOnDark : AppColors.textSecondary;
-    _drawLabel(canvas, '활기', Offset(s.width / 2, 8), textColor, anchorTop: true);
-    _drawLabel(canvas, '차분', Offset(s.width / 2, s.height - 20), textColor);
+    _drawLabel(canvas, '고각성', Offset(s.width / 2, 8), textColor, anchorTop: true);
+    _drawLabel(canvas, '저각성', Offset(s.width / 2, s.height - 20), textColor);
     _drawLabel(canvas, '불쾌', Offset(20, s.height / 2 - 8), textColor);
     _drawLabel(canvas, '유쾌', Offset(s.width - 20, s.height / 2 - 8), textColor);
 
