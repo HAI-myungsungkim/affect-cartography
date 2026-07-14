@@ -20,7 +20,12 @@ class LoginResponse(BaseModel):
     user_id: str
     participant_code: str
     real_name: str
-    record_mode: str
+    # ---- 실험 조건 배정 (블라인드: 값만 내려주고 군 이름은 표시하지 않음) ----
+    record_mode: str          # 축2: point / trajectory
+    observation_mode: str     # 축1: self_only / recall_other / scenario_other
+    emotion_timing: str       # 축3: immediate / delayed
+    agent_mode: str           # 축4: none / enabled
+    education_enabled: bool    # 교육자료 노출 여부
     trajectory_practice_done: bool
     first_login: bool = False
 
@@ -29,4 +34,4 @@ class LoginErrorCode:
     """로그인 실패 상세 코드. 사양서 4.1."""
     CODE_NOT_REGISTERED = "code_not_registered"  # 등록되지 않은 코드
     DEVICE_MISMATCH = "device_mismatch"  # 다른 기기에 바인딩됨
-    USER_DROPPED = "user_dropped"  # 이탈/종료 상태
+    USER_DROPPED = "user_dropped"  # 탈퇴/종료 상태

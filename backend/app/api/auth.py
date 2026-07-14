@@ -22,7 +22,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 @router.post("/login", response_model=LoginResponse)
 async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
     """사용자 로그인. 엄격 디바이스 바인딩 정책.
-    
+
     - 코드가 미등록 → 401 + code_not_registered
     - 첫 로그인 → 디바이스 ID 바인딩, 토큰 발급
     - 같은 기기 재진입 → 토큰 재발급
@@ -38,7 +38,7 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail={
                 "code": LoginErrorCode.CODE_NOT_REGISTERED,
-                "message": "등록되지 않은 코드입니다",
+                "message": "등록되지 않은 코드입니다.",
             },
         )
 
@@ -47,7 +47,7 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
             status_code=status.HTTP_403_FORBIDDEN,
             detail={
                 "code": LoginErrorCode.USER_DROPPED,
-                "message": "연구 참여가 종료된 계정입니다",
+                "message": "연구 참여가 종료된 계정입니다.",
             },
         )
 
@@ -55,22 +55,22 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
     first_login = False
 
     if user.device_id_hash is None:
-        # 첫 로그인 — 디바이스 바인딩
+        # 첫 로그인 → 디바이스 바인딩
         user.device_id_hash = incoming_hash
         user.first_login_at = datetime.now(timezone.utc)
         first_login = True
         await db.flush()
     elif user.device_id_hash != incoming_hash:
-        # 다른 기기 — 엄격 정책: 무조건 차단
+        # 다른 기기 → 엄격 정책: 무조건 차단
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail={
                 "code": LoginErrorCode.DEVICE_MISMATCH,
-                "message": "이 코드는 다른 기기에 등록되어 있습니다. 연구진에게 문의하세요",
+                "message": "이 코드는 다른 기기에 등록되어 있습니다. 연구진에게 문의하세요.",
             },
         )
 
-    # 실명 업데이트 (첫 로그인 시 비어있을 수 있음 — 관리자가 코드만 발급한 경우)
+    # 실명 업데이트 (첫 로그인 때 비어있을 수 있음 — 관리자가 코드만 발급한 경우)
     if first_login or not user.real_name:
         user.real_name = req.real_name
 
@@ -86,6 +86,10 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
         participant_code=user.participant_code,
         real_name=user.real_name,
         record_mode=user.record_mode.value,
+        observation_mode=user.observation_mode.value,
+        emotion_timing=user.emotion_timing.value,
+        agent_mode=user.agent_mode.value,
+        education_enabled=user.education_enabled,
         trajectory_practice_done=user.trajectory_practice_done,
         first_login=first_login,
     )
@@ -94,7 +98,7 @@ async def login(req: LoginRequest, db: AsyncSession = Depends(get_db)):
 @router.post("/admin/login")
 async def admin_login(req: AdminLoginRequest):
     """관리자 로그인. 사양서 4.1 하단.
-    
+
     PC 웹 대시보드용. 모바일에서는 일부 읽기 기능만 제공.
     """
     if req.admin_code != settings.admin_code:
